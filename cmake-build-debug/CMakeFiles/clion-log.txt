@@ -1,0 +1,4 @@
+"/home/i505710/Downloads/Untitled Folder/clion-2018.3.3/bin/cmake/linux/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/g++-7 -G "CodeBlocks - Unix Makefiles" /home/i505710/CLionProjects/MPI
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/i505710/CLionProjects/MPI/cmake-build-debug
