@@ -7,9 +7,16 @@ using namespace std;
 const int N = 2e8;
 const double eps = 1e-5;
 
+double f(double a, double b) {
+    if (a > b) {
+        return sqrt(a) + cbrt(b);
+    }
+    return cbrt(b) + sqrt(a);
+}
+
 void vectorSumSequential(double* a, double* b, double* c, int N) {
     for (int i = 0; i < N; ++i) {
-        c[i] = a[i] + b[i];
+        c[i] = f(a[i], b[i]);
     }
 }
 
@@ -54,9 +61,7 @@ int main (int argc, char* argv[])
 //        vectorSumSequential(a, b, c, N);
 //        finishTime = MPI_Wtime();
 //        duration = finishTime - startTime;
-//
 //        cout << N << ',' << 1 << ',' << fixed << duration << endl;
-//        cerr << fixed << "N = " << N << ", processes = " << 1 << ", time = " << fixed << duration << endl;
         startTime = MPI_Wtime();
     }
 
@@ -64,7 +69,7 @@ int main (int argc, char* argv[])
     MPI_Scatter(b, n1, MPI_DOUBLE, bp, n1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     for (int i = 0; i < n1; ++i) {
-        cp[i] = ap[i] + bp[i];
+        cp[i] = f(ap[i], bp[i]);
     }
 
     MPI_Gather(cp, n1, MPI_DOUBLE, c, n1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -73,7 +78,6 @@ int main (int argc, char* argv[])
         finishTime = MPI_Wtime();
         duration = finishTime - startTime;
         cout << N << ',' << size << ',' << fixed << duration << endl;
-//        cerr << fixed << "N = " << N << ", processes = " << size << ", time = " << fixed << duration << endl;
         bool isCorrect = true;
         for (int i = 0; i < N; ++i) {
             if (fabs(c[i] - (a[i] + b[i])) >= eps) {
