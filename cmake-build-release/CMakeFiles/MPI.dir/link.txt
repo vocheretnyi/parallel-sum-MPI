@@ -1,1 +1,0 @@
-mpicxx  -O3 -DNDEBUG   CMakeFiles/MPI.dir/main.cpp.o  -o MPI 
